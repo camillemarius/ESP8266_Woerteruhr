@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "random": "cpp",
+        "limits": "cpp",
+        "ranges": "cpp"
+    },
+    "cmake.sourceDirectory": "C:/Users/Camille/Documents/PlatformIO/Projects/05 Clocktwo/v3_clocktwo_wifi/.pio/libdeps/huzzah/WiFiManager"
+}
