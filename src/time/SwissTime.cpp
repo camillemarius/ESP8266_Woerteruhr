@@ -9,14 +9,12 @@ SwissTime::SwissTime(int wakeupdelay_ms)  : wakeupdelay_cnt(0), awakeCountPerDay
 
 bool SwissTime::getTime() {
     bool error = false;
-    //int  wakeupdelay_m = wakeupdelay_ms/(60*1000);
 
     if(initializied == false) {
         error = getTimeFromWifi();
         initializied = true;
         Serial.println("TIME: Initial get time from wifi");
     } else {
-        //if(wifiTimeError == false) {
             if(wakeupdelay_cnt >= ((24*60)/awakeCountPerDay)) {
                     error = getTimeFromWifi();
                     wifiTimeError = error;

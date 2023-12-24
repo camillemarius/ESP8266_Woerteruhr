@@ -4,11 +4,6 @@
 #include "Arduino.h"
 #include <Adafruit_NeoPixel.h>
 
-//#include <clocks/seislerdeutsch.h>
-//#include <clocks/berndeutsch_doemu.h>
-//#include <clocks/berndeutsch_jaya.h>
-
-
 class WS2812
 {
     public:
