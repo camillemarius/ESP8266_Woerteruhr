@@ -171,7 +171,8 @@ void WS2812::ws2812_refresh(int s, int m, int h)
   }
   min(m);
   hour(h);
-  strip->show();
+  dimOn();
+  //strip->show();
 }
 
 
@@ -202,6 +203,15 @@ void WS2812::rainbow(uint8_t wait) {
     delay(wait);
   }
 }
+
+void WS2812::dimOn(int finalBrightness) {
+  for(int brightness = 0; brightness <= finalBrightness; brightness++) {
+    strip->setBrightness(brightness);
+    strip->show();
+    //delay(1);
+  }
+}
+
 
 void WS2812::dimm(uint8_t wait) {
   for (int i=0; i<4;i++)
