@@ -15,6 +15,7 @@ class WS2812
         void hour(int h);
         void ws2812_refresh(int s, int m, int h);
         void rainbow(uint8_t wait);
+        void dimOn(int finalBrightness);
         void dimm(uint8_t wait);
         void preview();
         void regulate_brightness();
