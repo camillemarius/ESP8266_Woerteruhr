@@ -29,8 +29,8 @@ void setup()
   Serial.begin(9600);
 
   // Init WS2812
-  ws2812.ws2812_init();
-  ws2812.preview();
+  ws2812.initWS2812();
+  ws2812.advertisingAnimation();
 }
 
 /*=================================================================================
@@ -49,9 +49,9 @@ void loop()
     ---------------------------------------------------------------------------*/
     if ((swissTime.h >= sleeptime) || (swissTime.h < wakeuptime))
     {
-      ws2812.all_off();
+      ws2812.allOff();
       if(swissTime.h >= wakeuptime-1) {
-        // check time more often one hour before wakeup
+        // check time more often one showHour before wakeup
         delay(wakeupdelay_ms);
       }
       else {
@@ -61,8 +61,8 @@ void loop()
     }
     else
     {
-      ws2812.ws2812_refresh(swissTime.s, swissTime.m, swissTime.h);
-      //ws2812.regulate_brightness();
+      ws2812.showTime(swissTime.s, swissTime.m, swissTime.h);
+      //ws2812.adjustBrightness();
       delay(wakeupdelay_ms);
     } 
   }
