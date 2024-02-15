@@ -6,7 +6,7 @@
 int ALSPT19::getIlluminance()
 {
     calculateIlluminance();
-    return actuall_brightness;
+    return actuall_illuminance;
 }
 
 int ALSPT19::getMinIlluminance() {
@@ -19,7 +19,7 @@ int ALSPT19::getMaxIlluminance() {
 /*============================================================================
 == PRIVATE
 ============================================================================*/
-ALSPT19::ALSPT19() :min_illuminance(0), max_illuminance(0), actuall_brightness(0)
+ALSPT19::ALSPT19() :min_illuminance(50), max_illuminance(300), actuall_illuminance(50)
 {
   ;
 }
@@ -31,15 +31,17 @@ void ALSPT19::calculateIlluminance()
   // 0.083*value+5
   // new_brightness = (13/120)*x+5=0.1083*x+2
   // new_brightness = (14/120)*x+1=0.1166*x+1
-  int value = analogRead(0);
-  actuall_brightness = static_cast<int> (0.1166*value+1);
+  actuall_illuminance = analogRead(A0);
+  Serial.println("ALSPT19::calculateIlluminance::actuall_illuminance: ");
+  Serial.print(actuall_illuminance);
+  Serial.println("");
 
   //set brightness Thresholds
-  if(actuall_brightness<=min_illuminance) {
-    min_illuminance = actuall_brightness;
+  if(actuall_illuminance<=min_illuminance) {
+    min_illuminance = actuall_illuminance;
   }
 
-  if(actuall_brightness>=max_illuminance) {
-    max_illuminance = actuall_brightness;
+  if(actuall_illuminance>=max_illuminance) {
+    max_illuminance = actuall_illuminance;
   }
 }

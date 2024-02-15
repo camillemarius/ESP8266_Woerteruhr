@@ -20,8 +20,13 @@ class WS2812
         void prefix();
         void adjustBrightness();
         void setPixelColorArrayMap(int data[]);
-        
+        void setBrightnessFor(int ledIndex, uint8_t brightness);
+        void copyPrevPixelColorArrayMap();
+        void copyActualPixelColorArrayMap();
+
         void dimOn(int finalBrightness);
+        void dimNewlyTurnedOn(int finalBrightness);
+        void dimOff(int actuallBrighntess);
         void rainbowWheel(uint8_t wait);
         uint32_t colourWheel(byte WheelPos);
         void showNoInternet(void);
@@ -35,12 +40,15 @@ class WS2812
             }
         Adafruit_NeoPixel *strip;
         
-        LightMapping lightMap;;
+        LightMapping lightMap;
+        uint32_t *prevPixelColors;
+        uint32_t *actualPixelColors;
 
         //#include <clocks/seislerdeutsch_marlyse.h>
-        #include <clocks/berndeutsch_jaya.h>
-        #define LED_PIN D1
+        #include <clocks/v2berndeutsch.h>
+        #define LED_PIN D1 //GPIO5
         int led_cnt;
+        int brightness;
 
         #define white 0xFFFFFFFF
         #define off   0x00000000

@@ -18,7 +18,7 @@ class ALSPT19
     private: 
         int16_t min_illuminance;
         int16_t max_illuminance;
-        int16_t actuall_brightness;
+        int16_t actuall_illuminance;
 
         //const int8_t  alsPower      = sensorPowerPin;  // Power pin
         //const int8_t  alsData       = A4;              // The ALS PT-19 data pin

@@ -8,8 +8,8 @@
 /*=================================================================================
 --Variablen
 =================================================================================*/
-const int sleeptime = 21; 
-const int wakeuptime = 7;
+const int sleeptime = 22; 
+const int wakeuptime = 5;
 
 const double wakeupdelay_ms = 60*1000; // ms
 

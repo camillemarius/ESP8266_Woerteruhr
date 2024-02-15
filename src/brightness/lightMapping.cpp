@@ -9,27 +9,31 @@ int LightMapping::mapIlluminanceToLEDBrightness()
   // ILLUMINANCE:       X
   // MIN_ILLUMINANCE:   1
   // MAX_ILLUMINANCE:   15
-  // ADC_VALUE:       0-120
-  // adc_value = (ADC_VALUE/(MAX_ILLUMINANCE-MIN_ILLUMINANCE))*alspt19.getIlluminance() + 1
+  // ledBrighntess:       0-120
+  // ledBrighntess = (ledBrighntess/(MAX_ILLUMINANCE-MIN_ILLUMINANCE))*alspt19.getIlluminance() + 1
 
   // Define constants
+  const uint16_t ILLUMINANCE = alspt19.getIlluminance();
   const uint16_t MIN_ILLUMINANCE = alspt19.getMinIlluminance();   // Minimum illuminance
   const uint16_t MAX_ILLUMINANCE = alspt19.getMaxIlluminance();   // Maximum illuminance
-  const uint16_t MIN_ADC_THRESHOLD = 0;                           // ADC maximum value
-  const uint16_t MAX_ADC_THRESHOLD = 1023;                        // ADC maximum value
+  const uint16_t MIN_LED_BRIGHTNESS = 10;                         // Min LED Brightness
+  const uint16_t MAX_LED_BRIGHNTESS = 60;                         // Max LED Brightness
 
   // Apply a logarithmic transformation to map illuminance to brightness
-  float brightnessFloat = map(alspt19.getIlluminance(), MIN_ADC_THRESHOLD, MAX_ADC_THRESHOLD, MIN_ILLUMINANCE, MAX_ILLUMINANCE);
-  //float brightnessFloat = log(alspt19.getIlluminance() - MIN_ILLUMINANCE + 1) / log(MAX_ILLUMINANCE - MIN_ILLUMINANCE + 1) * ADC_THRESHOLD;
-  
+  //float brightnessFloat = map(alspt19.getIlluminance(), MIN_LED_BRIGHTNESS, MAX_LED_BRIGHNTESS, MIN_ILLUMINANCE, MAX_ILLUMINANCE);
+  float brightnessFloat = map(ILLUMINANCE, MIN_ILLUMINANCE, MAX_ILLUMINANCE, MIN_LED_BRIGHTNESS, MAX_LED_BRIGHNTESS);
+
   // Convert the floating-point brightness value to an integer
-  uint16_t adc_value = static_cast<uint16_t>(brightnessFloat);
+  uint16_t ledBrighntess = static_cast<uint16_t>(brightnessFloat);
+  Serial.println("lightMapping::mapIlluminanceToLEDBrightness::ledBrighntess: ");
+  Serial.print(MIN_LED_BRIGHTNESS);
+  Serial.print("-");
+  Serial.print(ledBrighntess);
+  Serial.print("-");
+  Serial.print(MAX_LED_BRIGHNTESS);
+  Serial.println("");
 
-  // Ensure the ADC value is within the valid range
-  adc_value = min(adc_value, MAX_ADC_THRESHOLD);
-  adc_value = max(adc_value, MIN_ADC_THRESHOLD);
-
-  return alspt19.getIlluminance();
+  return ledBrighntess;
 }
 /*============================================================================
 == PRIVATE

@@ -1,6 +1,6 @@
 #ifndef SEISLERDEUTSCH_H
 #define SEISLERDEUTSCH_H
-        /*      -                  0- 5
+        /*      -                   0- 5
                 FÜÜF AB             5-10
                 ZÄÄ AB             10-15
                 VIERTU AB          15-20
