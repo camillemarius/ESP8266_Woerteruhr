@@ -16,8 +16,6 @@ int LightMapping::mapIlluminanceToLEDBrightness()
   const uint16_t ILLUMINANCE = alspt19.getIlluminance();
   const uint16_t MIN_ILLUMINANCE = alspt19.getMinIlluminance();   // Minimum illuminance
   const uint16_t MAX_ILLUMINANCE = alspt19.getMaxIlluminance();   // Maximum illuminance
-  const uint16_t MIN_LED_BRIGHTNESS = 10;                         // Min LED Brightness
-  const uint16_t MAX_LED_BRIGHNTESS = 60;                         // Max LED Brightness
 
   // Apply a logarithmic transformation to map illuminance to brightness
   //float brightnessFloat = map(alspt19.getIlluminance(), MIN_LED_BRIGHTNESS, MAX_LED_BRIGHNTESS, MIN_ILLUMINANCE, MAX_ILLUMINANCE);
@@ -25,7 +23,7 @@ int LightMapping::mapIlluminanceToLEDBrightness()
 
   // Convert the floating-point brightness value to an integer
   uint16_t ledBrighntess = static_cast<uint16_t>(brightnessFloat);
-  Serial.println("lightMapping::mapIlluminanceToLEDBrightness::ledBrighntess: ");
+  Serial.print("lightMapping::mapIlluminanceToLEDBrightness::ledBrighntess: ");
   Serial.print(MIN_LED_BRIGHTNESS);
   Serial.print("-");
   Serial.print(ledBrighntess);
@@ -35,6 +33,15 @@ int LightMapping::mapIlluminanceToLEDBrightness()
 
   return ledBrighntess;
 }
+
+int LightMapping::getminLedBrightness() {
+  return MIN_LED_BRIGHTNESS;
+}
+
+int LightMapping::getmaxLedBrightness() {
+  return MAX_LED_BRIGHNTESS;
+}
+
 /*============================================================================
 == PRIVATE
 ============================================================================*/

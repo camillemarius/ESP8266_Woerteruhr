@@ -62,8 +62,14 @@ void loop()
     else
     {
       ws2812.showTime(swissTime.s, swissTime.m, swissTime.h);
-      //ws2812.adjustBrightness();
-      delay(wakeupdelay_ms);
+      // If await next Miniute Boundary is bigger zero, show Time again.
+      //if(swissTime.awaitNextMinuteBoundary()) {
+      //  ws2812.showTime(swissTime.s, swissTime.m, swissTime.h);
+      //}
+      (void) swissTime.awaitNextMinuteBoundary();
+      //delay(wakeupdelay_ms);
     } 
+  } else {
+    ws2812.showNoInternet();
   }
 }

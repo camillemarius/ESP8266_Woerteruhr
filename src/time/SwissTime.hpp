@@ -15,6 +15,7 @@ class SwissTime
         bool getTime();
         bool getTimeFromWifi();  
         bool getTimeFromLocalCounter();
+        bool awaitNextMinuteBoundary(void);
 
     private:
         #define MY_NTP_SERVER "at.pool.ntp.org"       

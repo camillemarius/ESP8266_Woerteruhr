@@ -6,7 +6,10 @@
 void WS2812::showTime(int s, int m, int h) {
   
   strip->clear();
+  deleteActualPixelColorArrayMap();
+  
   brightness = lightMap.mapIlluminanceToLEDBrightness();
+
   // Es ist
   prefix();
   // Nach Ablauf der ersten halben Stunde nennt man die nächste volle Stunde
@@ -16,45 +19,44 @@ void WS2812::showTime(int s, int m, int h) {
   }
   showMin(m);
   showHour(h);
-  copyActualPixelColorArrayMap();
-  dimNewlyTurnedOn(brightness);
-  copyPrevPixelColorArrayMap();
-}
 
-void WS2812::adjustBrightness() {
-  strip->setBrightness(lightMap.mapIlluminanceToLEDBrightness());
+  //strip->show();
+  dimNewlyTurnedOn(brightness);
+  //dimOn(brightness);
+  copyPrevPixelColorArrayMap();
 }
 
 /*-----------------------------------------
 -- ON/OFF
 -----------------------------------------*/
 void WS2812::allOff() {
+  strip->clear();
   strip->fill(off, 0, led_cnt);
   strip->show();
 }
 
 void WS2812::dimOn(int finalBrightness) {
   //dimOff(finalBrightness);
-  for(int brightness = 3; brightness <= finalBrightness; brightness++) {
+  for(int brightness = lightMap.getminLedBrightness(); brightness < finalBrightness; brightness++) {
     strip->setBrightness(brightness);
     strip->show();
-    delay(25);
+    delay(10);
   }
 }
 
 void WS2812::dimNewlyTurnedOn(int finalBrightness) {
-  for(int brightness = 3; brightness <= finalBrightness; brightness++) {
+  for(int brightness = 5; brightness <= finalBrightness; brightness++) {
     for(int i = 0; i < led_cnt; i++) {
       if (prevPixelColors[i] != actualPixelColors[i]) {
-        if(actualPixelColors[i] != 0) {
-          //Serial.print("Led to dim: ");
-          //Serial.println(i);
-          setBrightnessFor(i, brightness);
-        }
+          if(actualPixelColors[i]==true) {
+            //Serial.print("Led to dim: ");
+            //Serial.println(i);
+            setBrightnessFor(i, brightness);
+          }
       }
     }
     strip->show();
-    delay(10);
+    delayMicroseconds(10);
   }
 }
 
@@ -82,14 +84,28 @@ void WS2812::prefix()
 void WS2812::showMin(int m)
 {
   //1min Anzeige
-  if (m % 5)
-  {
-    strip->fill(strip->Color(brightness,brightness,brightness), 0, m % 5);
-  }
-  else
-  {
+  int MIN1_ONE[2]           = {1,0};
+  int MIN1_TWO[3]           = {2,0,1};
+  int MIN1_THREE[4]         = {3,0,1,2};
+  int MIN1_FOUR[5]          = {4,0,1,2,3};
+  
+  int min1Cnt = m % 5;
+  if(min1Cnt == 0) {
     strip->fill(off, 0, 3);
   }
+  else if(min1Cnt == 1) {
+    setPixelColorArrayMap(MIN1_ONE);
+  }
+  else if(min1Cnt == 2) {
+    setPixelColorArrayMap(MIN1_TWO);
+  }
+  else if(min1Cnt == 3) {
+    setPixelColorArrayMap(MIN1_THREE);
+  }
+  else if(min1Cnt == 4) {
+    setPixelColorArrayMap(MIN1_FOUR);
+  }
+
 
   //5min Anzeige
   if (m >= 5 && m < 10)
@@ -204,7 +220,9 @@ void WS2812::showHour(int h)
 }
 
 void WS2812::showNoInternet(void) {
-    setPixelColorArrayMap(MINUTE_FIVE);
+      allOff();
+      setPixelColorArrayMap(NO_INTERNET);
+      strip->show();
 }
 
 /*-----------------------------------------
@@ -216,7 +234,7 @@ void WS2812::advertisingAnimation()
 
   strip->clear();
   strip->show();
-  strip->setBrightness(lightMap.mapIlluminanceToLEDBrightness());
+  //strip->setBrightness(lightMap.mapIlluminanceToLEDBrightness());
 }
 
 void WS2812::rainbowWheel(uint8_t wait) {
@@ -253,40 +271,42 @@ uint32_t WS2812::colourWheel(byte WheelPos) {
 WS2812::WS2812(int ledcnt)
 {
   led_cnt = ledcnt;
-  strip = new Adafruit_NeoPixel(led_cnt, D1, NEO_GRB + NEO_KHZ800);
-  prevPixelColors = new uint32_t[led_cnt];
-  actualPixelColors = new uint32_t[led_cnt];
+  strip = new Adafruit_NeoPixel(ledcnt, D1, NEO_GRB + NEO_KHZ800);
+  prevPixelColors = new bool[ledcnt];
+  actualPixelColors = new bool[ledcnt];
 }
 
 void WS2812::initWS2812()
 {
   strip->begin();
-  //strip.show();
-  strip->setBrightness(lightMap.mapIlluminanceToLEDBrightness());
+
+  brightness = lightMap.mapIlluminanceToLEDBrightness();
+  strip->setBrightness(brightness);
+  
 }
 
 void WS2812::setPixelColorArrayMap(int data[]) {
-  for (int j = 1; j <= data[0]; j++)
+  for (int a = 1; a <= data[0]; a++)
   {
-    strip->setPixelColor(data[j], strip->Color(brightness,brightness,brightness)); //  Set pixel's color (in RAM)
+    strip->setPixelColor(data[a], strip->Color(brightness,brightness,brightness)); //  Set pixel's color (in RAM)
+    actualPixelColors[data[a]] = true; //  Set pixel's color (in RAM)
   }
 }
 
 void WS2812::copyPrevPixelColorArrayMap() {
-  for (int j = 0; j <= led_cnt; j++)
+  for (int b = 0; b < led_cnt; b++)
   {
-    prevPixelColors[j] = actualPixelColors[j]; //  Set pixel's color (in RAM)
+    prevPixelColors[b] = actualPixelColors[b]; //  Set pixel's color (in RAM)
     //Serial.println(prevPixelColors[j]);
     //Serial.println(", ");
   }
 }
 
-void WS2812::copyActualPixelColorArrayMap() {
-  for (int j = 0; j <= led_cnt; j++)
+void WS2812::deleteActualPixelColorArrayMap() {
+  for (int c = 0; c < led_cnt; c++)
   {
-    actualPixelColors[j] = strip->getPixelColor(j); //  Set pixel's color (in RAM)
-    //Serial.println(prevPixelColors[j]);
-    //Serial.println(", ");
+    actualPixelColors[c] = false;//  Set pixel's color (in RAM)
   }
 }
+
 

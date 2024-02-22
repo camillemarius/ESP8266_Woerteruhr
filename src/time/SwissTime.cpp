@@ -10,10 +10,11 @@ SwissTime::SwissTime(int wakeupdelay_ms)  : wakeupdelay_cnt(0), awakeCountPerDay
 bool SwissTime::getTime() {
     bool error = false;
     
-    Serial.println("TIME: get SwissTime");
+    Serial.print("TIME: get SwissTime");
 
     if(initializied == false) {
         error = getTimeFromWifi();
+        //awaitNextMinuteBoundary();
         initializied = true;
         Serial.println("TIME: Initial get time from wifi");
     } else {
@@ -21,7 +22,7 @@ bool SwissTime::getTime() {
                     error = getTimeFromWifi();
                     wifiTimeError = error;
                     wakeupdelay_cnt = 0;
-                    Serial.println("TIME: Get Time from wifi after timeout");
+                    Serial.print("TIME: Get Time from wifi after timeout");
                     if(wifiTimeError == true) {
                         error = getTimeFromLocalCounter();
                         wifiTimeError = false; // Error handeld
@@ -29,12 +30,54 @@ bool SwissTime::getTime() {
                     }
             } else {
                 error = getTimeFromLocalCounter();    
-                Serial.println("TIME: Calculate time");
+                Serial.print("TIME: Calculate time");
             }
     }
 
     wakeupdelay_cnt++;
     return error;
+}
+
+bool SwissTime::awaitNextMinuteBoundary(void) {
+    if(s==0) {
+        wakeupdelay_ms = 0;
+    } else {
+        wakeupdelay_ms = (60-s)*1000;
+    }
+
+    Serial.print("TIME: awaitNextMinuteBoundary: ");
+    Serial.println(wakeupdelay_ms/1000);
+
+    if(wakeupdelay_ms != 0) {
+        delay(wakeupdelay_ms);
+        return true;
+    } else {
+        return false;
+    }
+
+    /*if(time_to_wait!=0) {
+        
+        s = 0;
+        m++;
+        if(m>=60) {
+            m=0;
+            h++;
+        }
+        if(h>=24) {
+            h=0;
+        }
+        return true;;
+    }
+    return false;
+    
+    Serial.print(h);
+    Serial.print("h");
+    Serial.print(m);
+    Serial.print("m");
+    Serial.print(s);
+    Serial.print("s");
+    Serial.println("");*/
+    
 }
 
 bool SwissTime::getTimeFromWifi()
@@ -71,11 +114,12 @@ bool SwissTime::getTimeFromWifi()
 
 bool SwissTime::getTimeFromLocalCounter() {
     int64_t time_passed = 0;
+    int64_t inaccuracy_timout = 1132;
     // Determin passed time
     if(wifiTimeError == false) {
-        time_passed = wakeupdelay_ms/1000;
+        time_passed = wakeupdelay_ms/1000 + inaccuracy_timout/1000;
     } else {
-        time_passed = wakeupdelay_ms/1000 + configPortalTimeout + connectTimeout;
+        time_passed = wakeupdelay_ms/1000 + configPortalTimeout + connectTimeout + inaccuracy_timout/1000;
     }
 
     if(time_passed>=60) {
