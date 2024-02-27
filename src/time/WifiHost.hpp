@@ -1,14 +1,14 @@
-#ifndef WIFIHOST_HPP
-#define WIFIHOST_HPP
+#ifndef WifiHost_HPP
+#define WifiHost_HPP
 #include "Arduino.h"
 #include <WifiClientSecure.h>
 #include <WiFiManager.h>
 
 
-class wifiHost
+class WifiHost
 {
 public:
-    wifiHost(int configPortalTimeout, int connectTimeout);
+    WifiHost(int configPortalTimeout, int connectTimeout);
     bool connectToWifi(void);
     bool disconnectFromWifi(void);
 

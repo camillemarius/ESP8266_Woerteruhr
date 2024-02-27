@@ -1,11 +1,11 @@
 #include "WifiHost.hpp"
 
-wifiHost::wifiHost(int configPortalTimeout, int connectTimeout) 
+WifiHost::WifiHost(int configPortalTimeout, int connectTimeout) 
 :this_configPortalTimeout(configPortalTimeout), this_connectTimeout(connectTimeout) {
 
 }
 
-bool wifiHost::connectToWifi(void) {
+bool WifiHost::connectToWifi(void) {
     //manager.setConfigPortalBlocking(true);
     manager.setConfigPortalTimeout(this_configPortalTimeout);
     manager.setConnectTimeout(this_connectTimeout);
@@ -16,6 +16,6 @@ bool wifiHost::connectToWifi(void) {
     return true;
 }
 
-bool wifiHost::disconnectFromWifi(void) {
+bool WifiHost::disconnectFromWifi(void) {
     return manager.disconnect();
 }

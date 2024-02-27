@@ -2,7 +2,15 @@
     "files.associations": {
         "random": "cpp",
         "limits": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp"
     },
-    "cmake.sourceDirectory": "C:/Users/Camille/Documents/PlatformIO/Projects/05 Clocktwo/v3_clocktwo_wifi/.pio/libdeps/huzzah/WiFiManager"
+    "cmake.sourceDirectory": "C:/Users/Camille/Documents/PlatformIO/Projects/05 Qlocktwo/ESP8266_Qlocktwo/.pio/libdeps/huzzah/WiFiManager"
 }

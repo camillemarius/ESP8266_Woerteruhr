@@ -1,9 +1,14 @@
-#include "LightMapping.hpp"
+#include "AmbientLightController.hpp"
 
 /*============================================================================
 == PUBLIC
 ============================================================================*/
-int LightMapping::mapIlluminanceToLEDBrightness()
+AmbientLightController::AmbientLightController() : MIN_LED_BRIGHTNESS(50), MAX_LED_BRIGHNTESS(200)
+{
+  ;
+}
+
+int AmbientLightController::getLedBrightness(void)
 {
   // LED_BRIGHNESS:     1-15
   // ILLUMINANCE:       X
@@ -23,7 +28,7 @@ int LightMapping::mapIlluminanceToLEDBrightness()
 
   // Convert the floating-point brightness value to an integer
   uint16_t ledBrighntess = static_cast<uint16_t>(brightnessFloat);
-  Serial.print("lightMapping::mapIlluminanceToLEDBrightness::ledBrighntess: ");
+  Serial.print("AmbientLightController::getLedBrightness::ledBrighntess: ");
   Serial.print(MIN_LED_BRIGHTNESS);
   Serial.print("-");
   Serial.print(ledBrighntess);
@@ -34,19 +39,13 @@ int LightMapping::mapIlluminanceToLEDBrightness()
   return ledBrighntess;
 }
 
-int LightMapping::getminLedBrightness() {
+int AmbientLightController::getminLedBrightness(void) {
   return MIN_LED_BRIGHTNESS;
 }
 
-int LightMapping::getmaxLedBrightness() {
+int AmbientLightController::getmaxLedBrightness(void) {
   return MAX_LED_BRIGHNTESS;
 }
 
-/*============================================================================
-== PRIVATE
-============================================================================*/
-LightMapping::LightMapping()
-{
-  ;
-}
+
 

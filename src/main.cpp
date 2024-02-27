@@ -2,7 +2,7 @@
 --Includes
 =================================================================================*/
 #include <Arduino.h>
-#include <led/WS2812.hpp>
+#include <WordClock/WordClock.hpp>
 #include <time/SwissTime.hpp>
 
 /*=================================================================================
@@ -16,7 +16,7 @@ const double wakeupdelay_ms = 60*1000; // ms
 // Time instance
 SwissTime swissTime(wakeupdelay_ms);
 // Led-Strip Instance
-WS2812 ws2812(114);
+WordClock wordClock;
 
 
 
@@ -29,8 +29,7 @@ void setup()
   Serial.begin(9600);
 
   // Init WS2812
-  ws2812.initWS2812();
-  ws2812.advertisingAnimation();
+  wordClock.showAdvertisingAnimation();
 }
 
 /*=================================================================================
@@ -49,7 +48,7 @@ void loop()
     ---------------------------------------------------------------------------*/
     if ((swissTime.h >= sleeptime) || (swissTime.h < wakeuptime))
     {
-      ws2812.allOff();
+      wordClock.allOff();
       if(swissTime.h >= wakeuptime-1) {
         // check time more often one showHour before wakeup
         delay(wakeupdelay_ms);
@@ -61,7 +60,7 @@ void loop()
     }
     else
     {
-      ws2812.showTime(swissTime.s, swissTime.m, swissTime.h);
+      wordClock.showTime(swissTime.s, swissTime.m, swissTime.h);
       // If await next Miniute Boundary is bigger zero, show Time again.
       //if(swissTime.awaitNextMinuteBoundary()) {
       //  ws2812.showTime(swissTime.s, swissTime.m, swissTime.h);
@@ -70,6 +69,6 @@ void loop()
       //delay(wakeupdelay_ms);
     } 
   } else {
-    ws2812.showNoInternet();
+    wordClock.showNoInternet();
   }
 }

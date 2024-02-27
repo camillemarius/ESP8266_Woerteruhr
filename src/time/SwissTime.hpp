@@ -4,18 +4,19 @@
 #include "Arduino.h"
 #include <WiFiUdp.h>
 #include <ESP8266WiFi.h>
-#include "wifiHost.hpp"
+#include "WifiHost.hpp"
 
 class SwissTime
 {
     public:
-        uint32_t  h, m, s;
-
         SwissTime(int wakeupdelay_ms);
         bool getTime();
         bool getTimeFromWifi();  
         bool getTimeFromLocalCounter();
-        bool awaitNextMinuteBoundary(void);
+        void awaitNextMinuteBoundary(void);
+               
+    public:
+        uint32_t  h, m, s;
 
     private:
         #define MY_NTP_SERVER "at.pool.ntp.org"       
@@ -32,7 +33,11 @@ class SwissTime
 
         time_t now;
         tm tm_data;
-        wifiHost wifi;
+        WifiHost wifi;
+
+ 
+
+
         
 };
 
