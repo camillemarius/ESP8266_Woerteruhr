@@ -15,6 +15,7 @@ void WordClock::showTime(int s, int m, int h) {
   ws2812eco->deleteActualPixelColorArrayMap();
   
   brightness = lightMap->getLedBrightness();
+  ws2812eco->setBrightness(brightness);
 
   // Es ist
   //setPrefix();

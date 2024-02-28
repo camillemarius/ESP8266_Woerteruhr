@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "wordclock/led/WS2812.hpp"
-#include <wordclock/frontplates/2.GEN/berndeutsch.h>
+#include <wordclock/frontplates/2.GEN/seislerdeutsch.h>
 #include "brightnessControll/AmbientLightController.hpp"
 
 class WordClock

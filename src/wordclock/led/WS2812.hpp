@@ -13,6 +13,7 @@ class WS2812
         void deletePixelColorArrayFromTo(int from, int to);
         void show(void);
         void setBrightnessFor(int ledIndex, uint8_t brightness);
+        void setBrightness(int _brighntess);
         void copyPrevPixelColorArrayMap();
         void deleteActualPixelColorArrayMap();
         void clearPixelColorArray();

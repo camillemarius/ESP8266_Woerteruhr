@@ -19,7 +19,7 @@ int ALSPT19::getMaxIlluminance() {
 /*============================================================================
 == PRIVATE
 ============================================================================*/
-ALSPT19::ALSPT19() :min_illuminance(50), max_illuminance(950), actuall_illuminance(50)
+ALSPT19::ALSPT19() :min_illuminance(20), max_illuminance(950), actuall_illuminance(50)
 {
   ;
 }

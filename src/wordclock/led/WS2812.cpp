@@ -17,25 +17,32 @@ WS2812::WS2812(int ledcnt)
 -- ON/OFF/DIM
 -----------------------------------------*/
 void WS2812::dimNewlyTurnedOn(int finalBrightness) {
+  // Set brightness for all old Leds
+  //strip->setBrightness(finalBrightness);
+
   for(int brightness = 5; brightness <= finalBrightness; brightness++) {
     for(int i = 0; i < led_cnt; i++) {
       if (prevPixelColors[i] != actualPixelColors[i]) {
+        // Set brightness for all new Leds
           if(actualPixelColors[i]==true) {
             setBrightnessFor(i, brightness);
-          }
-          if(actualPixelColors[i]==false) {
+          } else if(actualPixelColors[i]==false) {
             setBrightnessFor(i, finalBrightness-brightness);
           }
       }
     }
     strip->show();
-    delayMicroseconds(20);
+    delayMicroseconds(4000/finalBrightness); // Dimmvorgang gesamthaft: 4ms
   }
 }
 
 void WS2812::setBrightnessFor(int ledIndex, uint8_t brightness) {
     // Set the adjusted color for the LED
     strip->setPixelColor(ledIndex, strip->Color(brightness, brightness, brightness));
+}
+
+void WS2812::setBrightness(int _brighntess) {
+  brightness = _brighntess;
 }
 
 void WS2812::dimOff(int actuallBrighntess) {
