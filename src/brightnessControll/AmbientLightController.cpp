@@ -3,7 +3,7 @@
 /*============================================================================
 == PUBLIC
 ============================================================================*/
-AmbientLightController::AmbientLightController() : MIN_LED_BRIGHTNESS(50), MAX_LED_BRIGHNTESS(200)
+AmbientLightController::AmbientLightController() : MIN_LED_BRIGHTNESS(30), MAX_LED_BRIGHNTESS(200)
 {
   ;
 }

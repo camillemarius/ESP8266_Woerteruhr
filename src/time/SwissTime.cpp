@@ -1,7 +1,7 @@
 #include "SwissTime.hpp"
 
-SwissTime::SwissTime(int wakeupdelay_ms)  : wakeupdelay_cnt(0), awakeCountPerDay(3), reconnectionMinuteTime(60), wifiTimeError(false), initializied(false), 
-                                            wakeupdelay_ms(wakeupdelay_ms), configPortalTimeout(120), connectTimeout(30), wifi(configPortalTimeout,connectTimeout)
+SwissTime::SwissTime()  : wakeupdelay_cnt(0), awakeCountPerDay(3), reconnectionMinuteTime(60), wifiTimeError(false), initializied(false), 
+                          configPortalTimeout(120), connectTimeout(30), wifi(configPortalTimeout,connectTimeout)
 {
     /* Configuration of NTP */
     configTime(MY_TZ, MY_NTP_SERVER);

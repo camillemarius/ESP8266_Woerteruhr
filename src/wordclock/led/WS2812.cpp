@@ -49,7 +49,7 @@ void WS2812::dimOff(int actuallBrighntess) {
   for(int brightness = actuallBrighntess; brightness <= 3; brightness--) {
     strip->setBrightness(brightness);
     strip->show();
-    delay(25);
+    delay(4000/actuallBrighntess);
   }
 }
 

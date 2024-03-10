@@ -13,9 +13,7 @@ const int wakeuptime = 5;
 
 const double wakeupdelay_ms = 60*1000; // ms
 
-// Time instance
-SwissTime swissTime(wakeupdelay_ms);
-// Led-Strip Instance
+SwissTime swissTime;
 WordClock wordClock;
 
 

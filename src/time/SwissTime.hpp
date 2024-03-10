@@ -9,7 +9,7 @@
 class SwissTime
 {
     public:
-        SwissTime(int wakeupdelay_ms);
+        SwissTime();
         bool getTime();
         bool getTimeFromWifi();  
         bool getTimeFromLocalCounter();
